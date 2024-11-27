@@ -28,19 +28,6 @@ pub fn create_toyota() -> Car {
     }
 }
 
-#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
-pub struct Package<T: ocaml::FromValue + ocaml::ToValue> {
-    gift: T,
-}
-
-#[ocaml_gen::func]
-#[ocaml::func]
-pub fn pack_present() -> Package<String> {
-    Package {
-        gift: "hello".to_string(),
-    }
-}
-
 #[ocaml_gen::func]
 #[ocaml::func]
 pub fn fn_one_parameter(v1: Car) -> Car {

@@ -35,11 +35,6 @@ fn main() -> std::io::Result<()> {
         ocaml_gen::decl_func!(w, env, create_toyota => "create_toyota");
     });
 
-    ocaml_gen::decl_module!(w, env, "Gifts", {
-        ocaml_gen::decl_type_alias!(w, env, "t" => Package<String>);
-        ocaml_gen::decl_func!(w, env, pack_present => "pack_present");
-    });
-
     io::stdout().write_all(w.as_bytes())?;
     Ok(())
 }
