@@ -1,5 +1,7 @@
 [workspace]
 
+resolver = "2"
+
 members = [
     "ocaml-gen",
     "ocaml-gen/derive",

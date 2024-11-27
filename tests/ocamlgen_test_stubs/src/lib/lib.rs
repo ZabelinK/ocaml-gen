@@ -1,4 +1,4 @@
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::Struct)]
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
 pub struct SingleTuple(String);
 
 #[ocaml_gen::func]
@@ -13,7 +13,7 @@ pub fn print(s: SingleTuple) {
     println!("{}", s.0);
 }
 
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::CustomType)]
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::CustomType)]
 pub struct Car {
     name: String,
     doors: usize,
@@ -28,8 +28,8 @@ pub fn create_toyota() -> Car {
     }
 }
 
-#[derive(ocaml::IntoValue, ocaml::FromValue, ocaml_gen::Struct)]
-pub struct Package<T> {
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
+pub struct Package<T: ocaml::FromValue + ocaml::ToValue> {
     gift: T,
 }
 
@@ -71,6 +71,15 @@ pub fn fn_five_parameters(v1: Car, _v2: usize, _v3: usize, _v4: usize, _v5: usiz
     v1
 }
 
+// 75 | #[ocaml::func]
+//    | ^^^^^^^^^^^^^^ use of undeclared type `Value`
+//    |
+//    = note: this error originates in the attribute macro `ocaml::func` (in Nightly builds, run with -Z macro-backtrace for more info)
+// help: consider importing this enum
+//    |
+// 1  + use ocaml::Value;
+use ocaml::Value; // FIXME: something's wrong here...
+
 #[ocaml_gen::func]
 #[ocaml::func]
 pub fn fn_six_parameters(
@@ -83,6 +92,7 @@ pub fn fn_six_parameters(
 ) -> Car {
     v1
 }
+
 // Test OCamlDesc is implemented for i32
 #[ocaml_gen::func]
 #[ocaml::func]

@@ -21,7 +21,7 @@ pub mod conv;
 /// ```
 ///
 pub mod prelude {
-    pub use super::{decl_fake_generic, decl_func, decl_module, decl_type, decl_type_alias, Env};
+    pub use super::{decl_func, decl_module, decl_type, decl_type_alias, Env};
 }
 
 //
@@ -306,22 +306,4 @@ macro_rules! decl_type_alias {
         )
         .unwrap();
     }};
-}
-
-/// Creates a fake generic. This is a necessary hack, at the moment, to declare types (with the [`decl_type`] macro) that have generic parameters.
-#[macro_export]
-macro_rules! decl_fake_generic {
-    ($name:ident, $i:expr) => {
-        pub struct $name;
-
-        impl ::ocaml_gen::OCamlDesc for $name {
-            fn ocaml_desc(_env: &::ocaml_gen::Env, generics: &[&str]) -> String {
-                format!("'{}", generics[$i])
-            }
-
-            fn unique_id() -> u128 {
-                ::ocaml_gen::const_random!(u128)
-            }
-        }
-    };
 }

@@ -193,7 +193,7 @@ impl OCamlDesc for i64 {
     }
 }
 
-impl<T> OCamlDesc for ocaml::Pointer<'_, T>
+impl<T> OCamlDesc for ocaml::Pointer<T>
 where
     T: OCamlDesc,
 {

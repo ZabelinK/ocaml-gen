@@ -9,8 +9,6 @@ fn main() -> std::io::Result<()> {
     let mut w = String::new();
     let env = &mut Env::new();
 
-    ocaml_gen::decl_fake_generic!(T1, 0);
-
     ocaml_gen::decl_type!(w, env, SingleTuple => "single_tuple");
     ocaml_gen::decl_func!(w, env, new => "new_t");
     ocaml_gen::decl_func!(w, env, print => "print_t");
@@ -35,10 +33,6 @@ fn main() -> std::io::Result<()> {
     ocaml_gen::decl_module!(w, env, "Toyota", {
         ocaml_gen::decl_type_alias!(w, env, "t" => Car);
         ocaml_gen::decl_func!(w, env, create_toyota => "create_toyota");
-    });
-
-    ocaml_gen::decl_module!(w, env, "Packages", {
-        ocaml_gen::decl_type!(w, env, Package<T1> => "t");
     });
 
     ocaml_gen::decl_module!(w, env, "Gifts", {
