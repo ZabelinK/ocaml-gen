@@ -2,8 +2,5 @@ _build*
 bindings.ml
 target
 _opam
-# Cargo.lock should be ignored for libraries.
-# Cargo.lock should be committed only for binaries
-Cargo.lock
 release
 .rustc_info.json
