@@ -13,6 +13,7 @@ fn main() -> std::io::Result<()> {
     ocaml_gen::decl_func!(w, env, new => "new_t");
     ocaml_gen::decl_func!(w, env, print => "print_t");
     ocaml_gen::decl_type!(w, env, KeyValue => "key_value");
+    ocaml_gen::decl_type!(w, env, List => "list_t");
 
     ocaml_gen::decl_module!(w, env, "Car", {
         ocaml_gen::decl_type!(w, env, Car => "t");

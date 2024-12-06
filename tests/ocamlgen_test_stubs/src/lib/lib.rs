@@ -18,6 +18,11 @@ pub struct KeyValue {
     map: std::collections::BTreeMap<String, String>,
 }
 
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
+pub struct List {
+    items: std::collections::LinkedList<String>,
+}
+
 #[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::CustomType)]
 pub struct Car {
     name: String,

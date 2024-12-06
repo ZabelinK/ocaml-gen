@@ -2,6 +2,7 @@ type nonrec single_tuple = { inner: string } [@@boxed]
 external new_t : unit -> single_tuple = "new"
 external print_t : single_tuple -> unit = "print"
 type nonrec key_value = { map: ((string * string) list) } [@@boxed]
+type nonrec list_t = { items: ((string) list) } [@@boxed]
 
 module Car = struct 
   type nonrec t

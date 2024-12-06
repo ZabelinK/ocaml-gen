@@ -243,7 +243,7 @@ impl OCamlDesc for u64 {
     }
 }
 
-impl<K,V> OCamlDesc for std::collections::BTreeMap<K,V>
+impl<K, V> OCamlDesc for std::collections::BTreeMap<K, V>
 where
     K: OCamlDesc,
     V: OCamlDesc,
@@ -256,6 +256,20 @@ where
 
     fn unique_id() -> u128 {
         const_random!(u128) + K::unique_id() + V::unique_id()
+    }
+}
+
+impl<T> OCamlDesc for std::collections::LinkedList<T>
+where
+    T: OCamlDesc,
+{
+    fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
+        let t = T::ocaml_desc(env, generics);
+        format!("(({}) list)", t)
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128) + T::unique_id()
     }
 }
 
