@@ -19,12 +19,14 @@ let test_bytes_get =
       (tup2 QCheck.bytes QCheck.int) (fun (bs, idx) ->
         assume (idx >= 0 && idx < Bytes.length bs) ;
         let c = Bytes.get bs idx in
-        Bindings.test_bytes_get bs idx = c ) )
+        Bindings.test_bytes_get bs idx = int_of_char c ) )
 
 let test_u8_char_get_ascii_code =
   QCheck.(
     Test.make ~name:"Test u8 binding by getting ASCII code" QCheck.char
-      (fun c -> Int32.to_int @@ Bindings.test_get_ascii_code c = int_of_char c) )
+      (fun c ->
+        let c = int_of_char c in
+        Int32.to_int @@ Bindings.test_get_ascii_code c = c ) )
 
 let () =
   let builtin_types_qcheck_suite =
