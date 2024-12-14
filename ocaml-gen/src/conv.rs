@@ -80,9 +80,14 @@ where
 impl<T, E> OCamlDesc for Result<T, E>
 where
     T: OCamlDesc,
+    E: OCamlDesc,
 {
     fn ocaml_desc(env: &Env, generics: &[&str]) -> String {
-        T::ocaml_desc(env, generics)
+        format!(
+            "({}, {}) result",
+            T::ocaml_desc(env, generics),
+            E::ocaml_desc(env, generics)
+        )
     }
 
     fn unique_id() -> u128 {

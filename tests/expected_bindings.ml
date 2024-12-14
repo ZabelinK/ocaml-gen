@@ -4,6 +4,7 @@ external print_t : single_tuple -> unit = "print"
 type nonrec key_value = { map: ((string * string) list) } [@@boxed]
 type nonrec list_t = { items: ((string) list) } [@@boxed]
 type nonrec tuples_t = { t2: (int32 * int64); t3: (int32 * int64 * bool); t4: (int32 * int64 * bool * string); t5: (int32 * int64 * bool * string * float) }
+external option_to_result : (int64) option -> (int64, string) result = "option_to_result"
 
 module Car = struct 
   type nonrec t

@@ -17,6 +17,7 @@ fn main() -> std::io::Result<()> {
     ocaml_gen::decl_type!(w, env, KeyValue => "key_value");
     ocaml_gen::decl_type!(w, env, List => "list_t");
     ocaml_gen::decl_type!(w, env, Tuples => "tuples_t");
+    ocaml_gen::decl_func!(w, env, option_to_result => "option_to_result");
 
     ocaml_gen::decl_module!(w, env, "Car", {
         ocaml_gen::decl_type!(w, env, Car => "t");

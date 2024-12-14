@@ -23,6 +23,15 @@ pub struct List {
     items: std::collections::LinkedList<String>,
 }
 
+#[ocaml_gen::func]
+#[ocaml::func]
+pub fn option_to_result(o: Option<i64>) -> Result<i64, String> {
+    match o {
+        Some(x) => Ok(x),
+        None => Err("Value is missing!".to_owned()),
+    }
+}
+
 #[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
 pub struct Tuples {
     t2: (i32, i64),
