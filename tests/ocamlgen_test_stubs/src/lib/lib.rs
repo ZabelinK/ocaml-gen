@@ -23,6 +23,14 @@ pub struct List {
     items: std::collections::LinkedList<String>,
 }
 
+#[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::Struct)]
+pub struct Tuples {
+    t2: (i32, i64),
+    t3: (i32, i64, bool),
+    t4: (i32, i64, bool, String),
+    t5: (i32, i64, bool, String, f64),
+}
+
 #[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::CustomType)]
 pub struct Car {
     name: String,
