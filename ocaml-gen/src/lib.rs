@@ -82,11 +82,9 @@ impl Env {
 
     /// Retrieves a type that was declared previously.
     /// A boolean indicates if the type is being aliased.
-    ///
-    /// # Panics
-    /// The function will panic if the type was not declared previously.
+    /// Returns None if no type was found
     #[must_use]
-    pub fn get_type(&self, ty: u128, name: &str) -> (String, bool) {
+    pub fn get_type_opt(&self, ty: u128) -> Option<(String, bool)> {
         // first, check if we have an alias for this type
         if let Some(alias) = self
             .aliases
@@ -94,14 +92,11 @@ impl Env {
             .expect("ocaml-gen bug: bad initialization of aliases")
             .get(&ty)
         {
-            return ((*alias).to_string(), true);
+            return Some(((*alias).to_string(), true));
         }
 
         // otherwise, check where the type is declared
-        let (type_path, type_name) = self
-            .locations
-            .get(&ty)
-            .unwrap_or_else(|| panic!("ocaml-gen: the type {name} hasn't been declared"));
+        let (type_path, type_name) = self.locations.get(&ty)?;
 
         // path resolution
         let mut current = self.current_module.clone();
@@ -118,7 +113,18 @@ impl Env {
             format!("{}.{}", path.join("."), type_name)
         };
 
-        (name, false)
+        Some((name, false))
+    }
+
+    /// Retrieves a type that was declared previously.
+    /// A boolean indicates if the type is being aliased.
+    ///
+    /// # Panics
+    /// The function will panic if the type was not declared previously.
+    #[must_use]
+    pub fn get_type(&self, ty: u128, name: &str) -> (String, bool) {
+        self.get_type_opt(ty)
+            .unwrap_or_else(|| panic!("ocaml-gen: the type {name} hasn't been declared"))
     }
 
     /// Adds a new alias for the current scope (module).
