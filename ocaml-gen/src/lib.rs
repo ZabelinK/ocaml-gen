@@ -31,7 +31,7 @@ pub mod prelude {
 /// The environment at some point in time during the declaration of OCaml bindings.
 /// It ensures that types cannot be declared twice, and that types that are
 /// renamed and/or relocated into module are referenced correctly.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Env {
     /// every type (their path and their name) is stored here at declaration
     locations: HashMap<u128, (Vec<&'static str>, &'static str)>,
@@ -67,6 +67,13 @@ impl Env {
             current_module: Vec::new(),
             aliases: vec![HashMap::new()],
         }
+    }
+
+    /// Discards an environment
+    pub fn discard(mut self) {
+        self.locations.clear();
+        self.current_module.clear();
+        self.aliases.clear();
     }
 
     /// Declares a new type. If the type was already declared, this will panic.
