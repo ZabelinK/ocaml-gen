@@ -38,6 +38,7 @@ pub struct Tuples {
     t3: (i32, i64, bool),
     t4: (i32, i64, bool, String),
     t5: (i32, i64, bool, String, f64),
+    t6: (i32, i64, bool, String, f64, ocaml::bigarray::Array1<u8>),
 }
 
 #[derive(ocaml::ToValue, ocaml::FromValue, ocaml_gen::CustomType)]

@@ -64,6 +64,16 @@ impl OCamlDesc for &mut [u8] {
     }
 }
 
+impl OCamlDesc for ocaml::bigarray::Array1<u8> {
+    fn ocaml_desc(_env: &Env, _generics: &[&str]) -> String {
+        "(char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t".to_string()
+    }
+
+    fn unique_id() -> u128 {
+        const_random!(u128)
+    }
+}
+
 impl<T> OCamlDesc for Vec<T>
 where
     T: OCamlDesc,
